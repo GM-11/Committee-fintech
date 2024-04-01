@@ -5,6 +5,10 @@ const cors = require("cors"); // Import cors
 const authenticateUser = require("./middlewares/authenticateUser.js");
 const authorizeUser = require("./middlewares/authorizeUser.js");
 const createOrder = require("./controllers/paymentController.js");
+const {
+  createCommittee,
+  joinCommittee,
+} = require("./controllers/committeeController.js");
 require("dotenv").config();
 
 const app = express();
@@ -35,8 +39,16 @@ app.use("/admin", authenticateUser, authorizeUser("admin"), (req, res) => {
   // Handle admin-only route logic here
 });
 
+// payment api
 app.post("/createOrder", (req, res) => {
   return createOrder(req, res);
+});
+
+app.post("/createCommittee", (req, res) => {
+  return createCommittee(req, res);
+});
+app.post("/requestToJoin", (req, res) => {
+  return joinCommittee(req, res);
 });
 
 // Start the server
